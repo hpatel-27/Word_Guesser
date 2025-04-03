@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState, useRef } from "react";
+import "./App.css";
+import data from "./data/words.json";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  // Guess from the user
+  const [guess, setGuess] = useState("");
+  // Word for the user to guess
+  const [word, setWord] = useState("");
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if (!hasRun.current) {
+      // run once
+      // pick a word on load in
+      chooseWord();
+      hasRun.current = true;
+    }
+  });
+
+  const chooseWord = () => {
+    // helper function to pick a word from the words data
+    const wordIndex = Math.floor(Math.random() * 488);
+    const chosenWord = data.words[wordIndex].toUpperCase();
+    console.log(`chosen word: ${chosenWord}`);
+    setWord(chosenWord);
+  };
+
+  const getWord = () => {
+    console.log(`Chosen word in the state: ${word}`);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container mt-4">
+        <header>
+          <h1>Word Guesser</h1>
+        </header>
+        <button onClick={getWord}></button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
