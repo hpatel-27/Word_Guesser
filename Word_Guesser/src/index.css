@@ -23,8 +23,8 @@ body {
 }
 
 .card {
-  margin-left: 25%;
-  margin-right: 25%;
+  max-width: 400px; /** Max the table boxes into squares*/
+  margin: 0 auto; /** Put card in the middle */
 }
 
 table {
@@ -32,18 +32,41 @@ table {
   width: 100%;
 }
 
-td,
-th {
-  border-width: 4px !important;
-  font-size: xx-large;
-  width: auto;
-}
-
 #user-guess {
-  overflow-x: hidden;
-  width: max-content;
+  flex-grow: 1;
+  min-width: 0;
 }
 
 .btn-guess {
   margin-left: auto;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(90deg);
+    background-color: #242424;
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+.tile {
+  width: 3rem;
+  height: 4rem;
+  border: 1px solid #585858;
+  border-width: 4px !important;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  vertical-align: middle;
+  transition: background-color 0.3s, transform 0.4s;
+  transform-style: preserve-3d;
+}
+
+.flip {
+  animation: flip 0.6s ease-in-out forwards;
 }
