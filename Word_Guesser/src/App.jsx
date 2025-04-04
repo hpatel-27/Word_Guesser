@@ -11,6 +11,7 @@ const App = () => {
   // Word for the user to guess
   const [word, setWord] = useState("");
   const hasRun = useRef(false);
+  const [won, setWon] = useState(false);
   // load in the word data and convert to uppercase
   const wordList = data.words.map((wordData) => wordData.toUpperCase());
   let userInput = document.querySelector("#user-guess");
@@ -33,38 +34,49 @@ const App = () => {
   };
 
   const handleGuess = () => {
-    // Stop the user from guessing more if they have made 6 guesses
-    if (guessed.length >= 6) {
-      console.log(guessed);
-      Swal.fire({
-        title: "Out of Guesses",
-        text: "You have already used all your guesses!",
-        icon: "warning",
-        confirmButtonText: "OK",
-        theme: "dark",
-      });
-    } else {
-      // Update the list of guesses and number of guesses
-      let currGuess = userInput.value.trim().toUpperCase();
-      if (wordList.includes(currGuess)) {
-        // When the user picks a word that is allowed
-        setGuessed((prevGuesses) => [...prevGuesses, currGuess]);
-        userInput.value = "";
-        const updateNumGuess = numGuessed + 1;
-        setNumGuessed(updateNumGuess);
-
-        // when a user guesses the right word
-        checkGuess(currGuess, updateNumGuess);
-      } else {
-        // Word is not in the list, don't let them waste a guess
+    if (!won) {
+      // Stop the user from guessing more if they have made 6 guesses
+      if (guessed.length >= 6) {
+        console.log(guessed);
         Swal.fire({
-          title: "Not A Word",
-          text: "Not in our word list!",
-          icon: "error",
+          title: "Out of Guesses",
+          text: "You have already used all your guesses!",
+          icon: "warning",
           confirmButtonText: "OK",
           theme: "dark",
         });
+      } else {
+        // Update the list of guesses and number of guesses
+        let currGuess = userInput.value.trim().toUpperCase();
+        if (wordList.includes(currGuess)) {
+          // When the user picks a word that is allowed
+          setGuessed((prevGuesses) => [...prevGuesses, currGuess]);
+          userInput.value = "";
+          const updateNumGuess = numGuessed + 1;
+          setNumGuessed(updateNumGuess);
+
+          // when a user guesses the right word
+          checkGuess(currGuess, updateNumGuess);
+        } else {
+          // Word is not in the list, don't let them waste a guess
+          Swal.fire({
+            title: "Not A Word",
+            text: "Not in our word list!",
+            icon: "error",
+            confirmButtonText: "OK",
+            theme: "dark",
+          });
+        }
       }
+    } else {
+      // if the user has already won don't let them keep playing
+      Swal.fire({
+        title: "You Won!",
+        text: "You already won this game. Reload for a new word.",
+        icon: "info",
+        confirmButtonText: "OK",
+        theme: "dark",
+      });
     }
   };
 
@@ -104,6 +116,7 @@ const App = () => {
 
   const checkGuess = (currentGuess, numGuesses) => {
     if (currentGuess === word) {
+      setWon(true);
       Swal.fire({
         title: "You Win!",
         text: `You guessed the right word in ${numGuesses} attempts!`,
