@@ -40,7 +40,7 @@ const App = () => {
         console.log(guessed);
         Swal.fire({
           title: "Out of Guesses",
-          text: "You have already used all your guesses!",
+          text: `The word was ${word}!`,
           icon: "warning",
           confirmButtonText: "OK",
           theme: "dark",
