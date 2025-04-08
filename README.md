@@ -1,6 +1,6 @@
 # Word Guesser 🟩🟨⬜
 
-A simple, interactive word game inspired by [Wordle](https://www.nytimes.com/games/wordle/index.html). The user attempts to guess a randomly chosen five-letter word within six tries. After each guess, the game provides visual feedback indicating which letters are correct and whether they are in the correct position.
+A simple, interactive word game inspired by [Wordle](https://www.nytimes.com/games/wordle/index.html). The user attempts to guess a randomly chosen five-letter word within six tries. After each guess, the game provides visual feedback indicating which letters are correct and whether they are in the correct position. This project uses a curated subset of the [English Word Frequency](https://www.kaggle.com/datasets/rtatman/english-word-frequency) dataset available on Kaggle, which is based on Google's Web Trillion Word Corpus. Specifically, I extracted all five-letter English words from the dataset to build a clean, commonly used word list suitable for word-based games and applications.
 
 ## ✨ Features
 
